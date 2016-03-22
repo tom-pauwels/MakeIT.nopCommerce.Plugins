@@ -1,0 +1,8 @@
+﻿Group: Payment methods
+FriendlyName: Ogone Online Payments
+SystemName: Payments.Ogone
+Version: 1.9.1
+SupportedVersions: 3.60
+Author: Make-IT Consulting bvba
+DisplayOrder: 1
+FileName: MakeIT.Nop.Plugin.Payments.Ogone.dll 

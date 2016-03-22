@@ -1,0 +1,233 @@
+﻿@{
+    Layout = "";
+}
+@using MakeIT.Nop.Plugin.Payments.Ogone.Models;
+@model MakeIT.Nop.Plugin.Payments.Ogone.Models.ConfigurationModel
+@using Nop.Web.Framework;
+
+@Html.Action("StoreScopeConfiguration", "Setting", new { area = "Admin" })
+
+@using (Html.BeginForm())
+{
+    <table class="adminContent">
+    <tr>
+        <td colspan="2">
+            <b>If you're using this gateway ensure that your primary store currency is supported by Ogone!</b>
+        </td>
+    </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.OverrideStoreCheckboxFor(model => model.PSPId_OverrideForStore, model => model.PSPId, Model.ActiveStoreScopeConfiguration)
+                @Html.NopLabelFor(model => model.PSPId):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.PSPId)
+                @Html.ValidationMessageFor(model => model.PSPId)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.OverrideStoreCheckboxFor(model => model.SHAInPassPhrase_OverrideForStore, model => model.SHAInPassPhrase, Model.ActiveStoreScopeConfiguration)
+                @Html.NopLabelFor(model => model.SHAInPassPhrase):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.SHAInPassPhrase)
+                @Html.ValidationMessageFor(model => model.SHAInPassPhrase)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.OverrideStoreCheckboxFor(model => model.SHAOutPassPhrase_OverrideForStore, model => model.SHAOutPassPhrase, Model.ActiveStoreScopeConfiguration)
+                @Html.NopLabelFor(model => model.SHAOutPassPhrase):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.SHAOutPassPhrase)
+                @Html.ValidationMessageFor(model => model.SHAOutPassPhrase)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.OverrideStoreCheckboxFor(model => model.HashAllParameters_OverrideForStore, model => model.HashAllParameters, Model.ActiveStoreScopeConfiguration)
+                @Html.NopLabelFor(model => model.HashAllParameters):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.HashAllParameters)
+                @Html.ValidationMessageFor(model => model.HashAllParameters)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.OverrideStoreCheckboxFor(model => model.HashingAlgorithmId_OverrideForStore, model => model.HashingAlgorithmId, Model.ActiveStoreScopeConfiguration)
+                @Html.NopLabelFor(model => model.HashingAlgorithmValues):
+            </td>
+            <td class="adminData">
+                @Html.DropDownList("HashingAlgorithmId", Model.HashingAlgorithmValues)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.OverrideStoreCheckboxFor(model => model.OgoneGatewayUrl_OverrideForStore, model => model.OgoneGatewayUrl, Model.ActiveStoreScopeConfiguration)
+                @Html.NopLabelFor(model => model.OgoneGatewayUrl):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.OgoneGatewayUrl)
+                @Html.ValidationMessageFor(model => model.OgoneGatewayUrl)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.OverrideStoreCheckboxFor(model => model.ParamVar_OverrideForStore, model => model.ParamVar, Model.ActiveStoreScopeConfiguration)
+                @Html.NopLabelFor(model => model.ParamVar):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.ParamVar)
+                @Html.ValidationMessageFor(model => model.ParamVar)
+            </td>
+        </tr>
+         <tr>
+            <td class="adminTitle">
+                @Html.OverrideStoreCheckboxFor(model => model.PmList_OverrideForStore, model => model.PmList, Model.ActiveStoreScopeConfiguration)
+                @Html.NopLabelFor(model => model.PmList):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.PmList)
+                @Html.ValidationMessageFor(model => model.PmList)
+            </td>
+        </tr>        
+        <tr>
+            <td class="adminTitle">
+                @Html.OverrideStoreCheckboxFor(model => model.ExclPmList_OverrideForStore, model => model.ExclPmList, Model.ActiveStoreScopeConfiguration)
+                @Html.NopLabelFor(model => model.ExclPmList):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.ExclPmList)
+                @Html.ValidationMessageFor(model => model.ExclPmList)
+            </td>
+        </tr>       
+        <tr>
+            <td class="adminTitle">
+                @Html.OverrideStoreCheckboxFor(model => model.OrderIdPrefix_OverrideForStore, model => model.OrderIdPrefix, Model.ActiveStoreScopeConfiguration)
+                @Html.NopLabelFor(model => model.OrderIdPrefix):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.OrderIdPrefix)
+                @Html.ValidationMessageFor(model => model.OrderIdPrefix)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.OverrideStoreCheckboxFor(model => model.TemplateUrl_OverrideForStore, model => model.TemplateUrl, Model.ActiveStoreScopeConfiguration)
+                @Html.NopLabelFor(model => model.TemplateUrl):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.TemplateUrl)
+                @Html.ValidationMessageFor(model => model.TemplateUrl)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.OverrideStoreCheckboxFor(model => model.TemplateTitle_OverrideForStore, model => model.TemplateTitle, Model.ActiveStoreScopeConfiguration)
+                @Html.NopLabelFor(model => model.TemplateTitle):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.TemplateTitle)
+                @Html.ValidationMessageFor(model => model.TemplateTitle)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.OverrideStoreCheckboxFor(model => model.BackgroundColor_OverrideForStore, model => model.BackgroundColor, Model.ActiveStoreScopeConfiguration)
+                @Html.NopLabelFor(model => model.BackgroundColor):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.BackgroundColor)
+                @Html.ValidationMessageFor(model => model.BackgroundColor)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.OverrideStoreCheckboxFor(model => model.TextColor_OverrideForStore, model => model.TextColor, Model.ActiveStoreScopeConfiguration)
+                @Html.NopLabelFor(model => model.TextColor):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.TextColor)
+                @Html.ValidationMessageFor(model => model.TextColor)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.OverrideStoreCheckboxFor(model => model.TableBackgroundColor_OverrideForStore, model => model.TableBackgroundColor, Model.ActiveStoreScopeConfiguration)
+                @Html.NopLabelFor(model => model.TableBackgroundColor):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.TableBackgroundColor)
+                @Html.ValidationMessageFor(model => model.TableBackgroundColor)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.OverrideStoreCheckboxFor(model => model.TableTextColor_OverrideForStore, model => model.TableTextColor, Model.ActiveStoreScopeConfiguration)
+                @Html.NopLabelFor(model => model.TableTextColor):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.TableTextColor)
+                @Html.ValidationMessageFor(model => model.TableTextColor)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.OverrideStoreCheckboxFor(model => model.ButtonBackgroundColor_OverrideForStore, model => model.ButtonBackgroundColor, Model.ActiveStoreScopeConfiguration)
+                @Html.NopLabelFor(model => model.ButtonBackgroundColor):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.ButtonBackgroundColor)
+                @Html.ValidationMessageFor(model => model.ButtonBackgroundColor)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.OverrideStoreCheckboxFor(model => model.ButtonTextColor_OverrideForStore, model => model.ButtonTextColor, Model.ActiveStoreScopeConfiguration)
+                @Html.NopLabelFor(model => model.ButtonTextColor):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.ButtonTextColor)
+                @Html.ValidationMessageFor(model => model.ButtonTextColor)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.OverrideStoreCheckboxFor(model => model.FontFamily_OverrideForStore, model => model.FontFamily, Model.ActiveStoreScopeConfiguration)
+                @Html.NopLabelFor(model => model.FontFamily):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.FontFamily)
+                @Html.ValidationMessageFor(model => model.FontFamily)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.OverrideStoreCheckboxFor(model => model.LogoUrl_OverrideForStore, model => model.LogoUrl, Model.ActiveStoreScopeConfiguration)
+                @Html.NopLabelFor(model => model.LogoUrl):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.LogoUrl)
+                @Html.ValidationMessageFor(model => model.LogoUrl)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.OverrideStoreCheckboxFor(model => model.AdditionalFee_OverrideForStore, model => model.AdditionalFee, Model.ActiveStoreScopeConfiguration)
+                @Html.NopLabelFor(model => model.AdditionalFee):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.AdditionalFee)
+                @Html.ValidationMessageFor(model => model.AdditionalFee)
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" width="100%">
+                <button type="submit" name="save" value="save">Save</button>
+            </td>
+        </tr>
+    </table>
+}

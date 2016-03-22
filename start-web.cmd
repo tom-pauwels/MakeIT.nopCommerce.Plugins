@@ -1,0 +1,1 @@
+"C:\Program Files\IIS Express\iisexpress.exe" /path:C:\Projects\MakeIT.NopCommerce.Payments.Ogone\www /port:9090 /clr:v4.0

@@ -1,0 +1,12 @@
+1/7/2013 - v1.5.0
+--------------------------------------------------------------
+- Release for nopCommerce 3.00
+
+1/7/2013 - v1.4.2
+--------------------------------------------------------------
+- Avoid errors in log when browsing to AcceptPayment url
+- Ogone status 1 (Cancelled by client) was not processed
+
+22/5/2013 - v1.4.1
+--------------------------------------------------------------
+- Added PMLIST and EXCLPMLIST in admin payment configuration screen

@@ -1,0 +1,2 @@
+DataProvider: sqlserver
+DataConnectionString: Data Source=(localdb)\v11.0;Initial Catalog=nopcommerce-dev;Integrated Security=True;Persist Security Info=False;MultipleActiveResultSets=True
