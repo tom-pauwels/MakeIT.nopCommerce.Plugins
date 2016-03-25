@@ -65,7 +65,7 @@ namespace MakeIT.Nop.Plugin.Shipping.Bpost.ShippingManager
                 {
                     { "accountId", _settings.AccountId },
                     { "action", "START" },
-                    { "customerCountry", getShippingOptionRequest.CountryFrom.TwoLetterIsoCode },
+                    { "customerCountry", getShippingOptionRequest.ShippingAddress.Country.TwoLetterIsoCode },
                     { "orderReference", orderRef }
                 }, _settings.PassPhrase);
 
@@ -82,13 +82,10 @@ namespace MakeIT.Nop.Plugin.Shipping.Bpost.ShippingManager
                 Rate = 0,
                 ShippingRateComputationMethodSystemName = "SHM",
                 Description = string.Format(
-                    @"
-                    <div>
-                        <input class=""{13}"" type=""button"" onclick=""loadShm('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}', '{8}', '{9}', '{10}', '{11}', '{12}');"" value=""{14}"">
-                    </div>",
+                    @"<div><input class='{13}' type='button' onclick=""loadShm('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}', '{8}', '{9}', '{10}', '{11}', '{12}');"" value='{14}'></div>",
                     _settings.AccountId, 
                     orderRef, 
-                    getShippingOptionRequest.CountryFrom.TwoLetterIsoCode, 
+                    getShippingOptionRequest.ShippingAddress.Country.TwoLetterIsoCode, 
                     checkSum,
                     getShippingOptionRequest.ShippingAddress.FirstName, 
                     getShippingOptionRequest.ShippingAddress.LastName,

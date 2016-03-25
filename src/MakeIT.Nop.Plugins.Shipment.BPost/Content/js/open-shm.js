@@ -8,7 +8,6 @@
             accountId: accountId,
             action: 'START',
             customerCountry: custCountry,
-            confirmUrl: 'http://localhost:9090/Plugins/BpostShippingManager/ConfirmHandler',
             orderReference: orderRef,
             customerFirstName: customerFirstName,
             customerLastName: customerLastName,
