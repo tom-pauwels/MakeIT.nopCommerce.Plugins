@@ -70,7 +70,8 @@ namespace MakeIT.Nop.Plugin.Shipping.Bpost.ShippingManager.Controllers
             {
                 AccountId = _bpostShippingManagerSettings.AccountId,
                 PassPhrase = _bpostShippingManagerSettings.PassPhrase,
-                ButtonCssClass = _bpostShippingManagerSettings.ButtonCssClass
+                ButtonCssClass = _bpostShippingManagerSettings.ButtonCssClass,
+                Standardprice = _bpostShippingManagerSettings.Standardprice
             };
 
             return View("~/Plugins/Shipping.BPostShippingManager/Views/BPostShippingManager/Configure.cshtml", model);
@@ -89,6 +90,8 @@ namespace MakeIT.Nop.Plugin.Shipping.Bpost.ShippingManager.Controllers
             _bpostShippingManagerSettings.AccountId = model.AccountId;
             _bpostShippingManagerSettings.PassPhrase = model.PassPhrase;
             _bpostShippingManagerSettings.ButtonCssClass = model.ButtonCssClass;
+            _bpostShippingManagerSettings.Standardprice = model.Standardprice;
+
             _settingService.SaveSetting(_bpostShippingManagerSettings);
 
             SuccessNotification(_localizationService.GetResource("Admin.Plugins.Saved"));

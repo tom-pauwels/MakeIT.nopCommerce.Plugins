@@ -7,5 +7,6 @@ namespace MakeIT.Nop.Plugin.Shipping.Bpost.ShippingManager
         public string AccountId { get; set; }
         public string PassPhrase { get; set; }
         public string ButtonCssClass { get; set; }
+        public decimal Standardprice { get; set; }
     }
 }

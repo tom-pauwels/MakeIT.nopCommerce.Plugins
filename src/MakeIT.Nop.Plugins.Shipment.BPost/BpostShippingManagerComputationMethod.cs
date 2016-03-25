@@ -79,7 +79,7 @@ namespace MakeIT.Nop.Plugin.Shipping.Bpost.ShippingManager
             var bpostShippingOption = new ShippingOption
             {
                 Name = _localizationService.GetResource("MakeIT.Nop.Shipping.Bpost.ShippingManager.ShippingOptionTitle"),
-                Rate = 0,
+                Rate = _settings.Standardprice,
                 ShippingRateComputationMethodSystemName = "SHM",
                 Description = string.Format(
                     @"<div><input class='{13}' type='button' onclick=""loadShm('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}', '{8}', '{9}', '{10}', '{11}', '{12}');"" value='{14}'></div>",
@@ -127,7 +127,8 @@ namespace MakeIT.Nop.Plugin.Shipping.Bpost.ShippingManager
             {
                 AccountId = "111111",
                 PassPhrase = "MySecretPassPhrase",
-                ButtonCssClass = "button-1"
+                ButtonCssClass = "button-1",
+                Standardprice = 4
             };
             _settingService.SaveSetting(pluginSettings);
 

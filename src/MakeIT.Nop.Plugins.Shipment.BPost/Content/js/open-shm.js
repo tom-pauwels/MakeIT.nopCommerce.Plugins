@@ -22,9 +22,9 @@
         },
         closeCallback: function(data) {
             if (data === 'confirm') {
-                ShippingMethod.save();
+                //ShippingMethod.save();
                 // do something after client has clicked confirm in shippingmanager
-                //window.location.href = 'http://localhost:9090/onepagecheckout';
+                window.location.href = 'https://www.selecti.be/order/checkout';
             } else {
                 //window.top.location.href = "http://www.Shop.test/checkout/producten.php";
             }

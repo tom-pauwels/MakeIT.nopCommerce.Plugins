@@ -35,6 +35,15 @@
             </td>
         </tr>
         <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.Standardprice):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.Standardprice)
+                @Html.ValidationMessageFor(model => model.Standardprice)
+            </td>
+        </tr>
+        <tr>
             <td colspan="2">
                 <input type="submit" name="save" class="k-button" value="@T("Admin.Common.Save")" />
             </td>
