@@ -6,6 +6,7 @@ using MakeIT.Nop.Plugin.Shipping.Bpost.ShippingManager.Models;
 using Nop.Core;
 using Nop.Core.Domain.Common;
 using Nop.Core.Domain.Customers;
+using Nop.Core.Domain.Logging;
 using Nop.Core.Domain.Orders;
 using Nop.Core.Domain.Shipping;
 using Nop.Services.Common;
@@ -13,6 +14,7 @@ using Nop.Services.Configuration;
 using Nop.Services.Customers;
 using Nop.Services.Directory;
 using Nop.Services.Localization;
+using Nop.Services.Logging;
 using Nop.Services.Orders;
 using Nop.Services.Shipping;
 using Nop.Services.Stores;
@@ -27,6 +29,7 @@ namespace MakeIT.Nop.Plugin.Shipping.Bpost.ShippingManager.Controllers
         private readonly IStoreMappingService _storeMappingService;
         private readonly IGenericAttributeService _genericAttributeService;
         private readonly BpostShippingManagerSettings _bpostShippingManagerSettings;
+        private readonly ILogger _logger;
         private readonly ISettingService _settingService;
         private readonly ILocalizationService _localizationService;
         private readonly IShippingService _shippingService;
@@ -47,13 +50,15 @@ namespace MakeIT.Nop.Plugin.Shipping.Bpost.ShippingManager.Controllers
             ICustomerService customerService,
             ICountryService countryService,
             ICheckoutAttributeParser checkoutAttributeParser,
-            BpostShippingManagerSettings bpostShippingManagerSettings)
+            BpostShippingManagerSettings bpostShippingManagerSettings,
+            ILogger logger)
         {
             _storeContext = storeContext;
             _workContext = workContext;
             _storeMappingService = storeMappingService;
             _genericAttributeService = genericAttributeService;
             _bpostShippingManagerSettings = bpostShippingManagerSettings;
+            _logger = logger;
             _settingService = settingService;
             _localizationService = localizationService;
             _shippingService = shippingService;
@@ -102,6 +107,8 @@ namespace MakeIT.Nop.Plugin.Shipping.Bpost.ShippingManager.Controllers
         [ValidateInput(false)]
         public ActionResult ConfirmHandler(PostBackModel model)
         {
+            _logger.InsertLog(LogLevel.Information, "Entered ConfirmHandler");
+
             UpdateShippingOptionRate(model);
 
             if (model.DeliveryMethod.Equals(DeliveryMethod.Regular, StringComparison.InvariantCultureIgnoreCase))
@@ -186,6 +193,7 @@ namespace MakeIT.Nop.Plugin.Shipping.Bpost.ShippingManager.Controllers
             var shippingOptions =
                 _workContext.CurrentCustomer.GetAttribute<List<ShippingOption>>(
                     SystemCustomerAttributeNames.OfferedShippingOptions, _storeContext.CurrentStore.Id);
+            
             //loaded cached results. let's filter result by a chosen shipping rate computation method
             shippingOptions =
                 shippingOptions.Where(
@@ -204,6 +212,20 @@ namespace MakeIT.Nop.Plugin.Shipping.Bpost.ShippingManager.Controllers
                     SystemCustomerAttributeNames.OfferedShippingOptions,
                     shippingOptions,
                     _storeContext.CurrentStore.Id);
+
+                _genericAttributeService.SaveAttribute(
+                    _workContext.CurrentCustomer,
+                    SystemCustomerAttributeNames.SelectedShippingOption,
+                    shippingOption,
+                    _storeContext.CurrentStore.Id);
+
+                _logger.InsertLog(LogLevel.Information, 
+                    string.Format("Shipping option price updated to {0:c}", model.DeliveryMethodPriceTotalEuro), "", _workContext.CurrentCustomer);
+            }
+            else
+            {
+                _logger.InsertLog(LogLevel.Warning, "Shipping option not found", "Unable to update shipping option price",
+                    _workContext.CurrentCustomer);
             }
         }
 
