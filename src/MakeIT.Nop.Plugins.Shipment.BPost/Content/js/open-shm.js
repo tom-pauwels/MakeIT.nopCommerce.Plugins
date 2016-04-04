@@ -1,18 +1,20 @@
 ﻿function loadShm(accountId, orderRef, custCountry, checksum, customerFirstName, customerLastName, customerEmail,
-    customerStreet, customerPostalCode, customerCity, confirmUrl, cancelUrl, errorUrl) {
+    customerStreet, customerPostalCode, customerCity, confirmUrl, cancelUrl, errorUrl, lang, customerStreetNumber) {
     SHM.open({
         integrationType: 'POPUP',
         popupWidth: 1024,
         popupHeight: 600,
         parameters: {
             accountId: accountId,
+            lang: lang,
             action: 'START',
             customerCountry: custCountry,
             orderReference: orderRef,
             customerFirstName: customerFirstName,
             customerLastName: customerLastName,
             customerEmail: customerEmail,
-            customerStreet: customerStreet, 
+            customerStreet: customerStreet,
+            customerStreetNumber: customerStreetNumber,
             customerPostalCode: customerPostalCode, 
             customerCity: customerCity, 
             confirmUrl: confirmUrl,

@@ -76,13 +76,16 @@ namespace MakeIT.Nop.Plugin.Shipping.Bpost.ShippingManager
             var cancelUrl =  storeUrl + "Plugins/BpostShippingManager/CancelHandler";
             var errorUrl = storeUrl + "Plugins/PaymentOgone/ErrorHandler";
 
+            var streetNumberStart =
+                getShippingOptionRequest.ShippingAddress.Address1.IndexOfAny("0123456789".ToCharArray());
+
             var bpostShippingOption = new ShippingOption
             {
                 Name = _localizationService.GetResource("MakeIT.Nop.Shipping.Bpost.ShippingManager.ShippingOptionTitle"),
                 Rate = _settings.Standardprice,
                 ShippingRateComputationMethodSystemName = "SHM",
                 Description = string.Format(
-                    @"<div><input class='{13}' type='button' onclick=""loadShm('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}', '{8}', '{9}', '{10}', '{11}', '{12}');"" value='{14}'></div>",
+                    @"<div><input class='{13}' type='button' onclick=""loadShm('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}', '{8}', '{9}', '{10}', '{11}', '{12}', '{15}', '{16}');"" value='{14}'></div>",
                     _settings.AccountId, 
                     orderRef, 
                     getShippingOptionRequest.ShippingAddress.Country.TwoLetterIsoCode, 
@@ -90,14 +93,17 @@ namespace MakeIT.Nop.Plugin.Shipping.Bpost.ShippingManager
                     getShippingOptionRequest.ShippingAddress.FirstName, 
                     getShippingOptionRequest.ShippingAddress.LastName,
                     getShippingOptionRequest.Customer.Email,
-                    getShippingOptionRequest.ShippingAddress.Address1,
+                    getShippingOptionRequest.ShippingAddress.Address1.Substring(0, streetNumberStart - 1),
                     getShippingOptionRequest.ShippingAddress.ZipPostalCode,
                     getShippingOptionRequest.ShippingAddress.City,
                     confirmUrl,
                     cancelUrl,
                     errorUrl,
                     _settings.ButtonCssClass,
-                    _localizationService.GetResource("MakeIT.Nop.Shipping.Bpost.ShippingManager.ButtonCaption"))
+                    _localizationService.GetResource("MakeIT.Nop.Shipping.Bpost.ShippingManager.ButtonCaption"),
+                    _workContext.WorkingLanguage.UniqueSeoCode,
+                    getShippingOptionRequest.ShippingAddress.Address1.Substring(streetNumberStart)
+                    )
             };
             response.ShippingOptions.Add(bpostShippingOption);
 
