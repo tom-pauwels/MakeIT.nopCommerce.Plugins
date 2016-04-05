@@ -162,20 +162,16 @@ namespace MakeIT.Nop.Plugin.Shipping.Bpost.ShippingManager.Controllers
                 .LimitPerStore(_storeContext.CurrentStore.Id)
                 .ToList();
 
+            var collectPoint = string.Format(@"{0}, {1} {2}, {3} {4}, {5}", 
+                        model.CustomerPostalLocation, model.CustomerStreet, model.CustomerStreetNumber,
+                        model.CustomerPostalCode, model.CustomerCity, model.CustomerCountry);
+
             var checkoutAttributes = _checkoutAttributeService.GetAllCheckoutAttributes(_storeContext.CurrentStore.Id, !cart.RequiresShipping());
             var attributesXml = _workContext.CurrentCustomer.GetAttribute<string>(SystemCustomerAttributeNames.CheckoutAttributes, _storeContext.CurrentStore.Id);
             foreach (var attribute in checkoutAttributes)
             {
                 if (attribute.Name == "CollectPoint")
                 {
-                    var collectPoint = string.Format(@"
-                        {0}
-                        {1} {2}
-                        {3} {4}
-                        {5}
-                        ", model.CustomerPostalLocation, model.CustomerStreet, model.CustomerStreetNumber,
-                        model.CustomerPostalCode, model.CustomerCity, model.CustomerCountry);
-
                     attributesXml = _checkoutAttributeParser.AddCheckoutAttribute(attributesXml, attribute, collectPoint);
                 }
 
@@ -186,6 +182,10 @@ namespace MakeIT.Nop.Plugin.Shipping.Bpost.ShippingManager.Controllers
             }
 
             _genericAttributeService.SaveAttribute(_workContext.CurrentCustomer, SystemCustomerAttributeNames.CheckoutAttributes, attributesXml, _storeContext.CurrentStore.Id);
+
+            _genericAttributeService.SaveAttribute(_workContext.CurrentCustomer, CustomCustomerAttributeNames.DeliveryMethod, model.DeliveryMethod, _storeContext.CurrentStore.Id);
+            _genericAttributeService.SaveAttribute(_workContext.CurrentCustomer, CustomCustomerAttributeNames.DeliveryMethodRate, model.DeliveryMethodPriceTotalEuro, _storeContext.CurrentStore.Id);
+            _genericAttributeService.SaveAttribute(_workContext.CurrentCustomer, CustomCustomerAttributeNames.DeliveryMethodAddress, collectPoint, _storeContext.CurrentStore.Id);
         }
 
         private void UpdateShippingOptionRate(PostBackModel model)
@@ -218,14 +218,6 @@ namespace MakeIT.Nop.Plugin.Shipping.Bpost.ShippingManager.Controllers
                     SystemCustomerAttributeNames.SelectedShippingOption,
                     shippingOption,
                     _storeContext.CurrentStore.Id);
-
-                _logger.InsertLog(LogLevel.Information, 
-                    string.Format("Shipping option price updated to {0:c}", model.DeliveryMethodPriceTotalEuro), "", _workContext.CurrentCustomer);
-            }
-            else
-            {
-                _logger.InsertLog(LogLevel.Warning, "Shipping option not found", "Unable to update shipping option price",
-                    _workContext.CurrentCustomer);
             }
         }
 

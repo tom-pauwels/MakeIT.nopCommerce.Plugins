@@ -19,7 +19,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\www\Plugins\Shipping.BPostShippingManager\</OutputPath>
+    <OutputPath>..\..\..\..\nopcommerce.3.60\Plugins\Shipping.BPostShippingManager\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -226,6 +226,7 @@
     <Compile Include="BpostShippingManagerSettings.cs" />
     <Compile Include="CheckSumCalculator.cs" />
     <Compile Include="Controllers\BPostShippingManagerController.cs" />
+    <Compile Include="CustomCustomerAttributeNames.cs" />
     <Compile Include="DeliveryMethod.cs" />
     <Compile Include="Models\BpostShippingManagerModel.cs" />
     <Compile Include="Models\PostBackModel.cs" />
@@ -235,7 +236,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\js\open-shm.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\js\shm.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

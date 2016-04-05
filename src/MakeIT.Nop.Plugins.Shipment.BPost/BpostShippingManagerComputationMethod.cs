@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Routing;
+using Microsoft.SqlServer.Server;
 using Nop.Core;
+using Nop.Core.Domain.Customers;
 using Nop.Core.Domain.Shipping;
 using Nop.Core.Plugins;
+using Nop.Services.Common;
 using Nop.Services.Configuration;
 using Nop.Services.Shipping;
 using Nop.Services.Localization;
@@ -75,17 +78,35 @@ namespace MakeIT.Nop.Plugin.Shipping.Bpost.ShippingManager
             var confirmUrl = storeUrl + "Plugins/BpostShippingManager/ConfirmHandler";
             var cancelUrl =  storeUrl + "Plugins/BpostShippingManager/CancelHandler";
             var errorUrl = storeUrl + "Plugins/PaymentOgone/ErrorHandler";
+            var reloadUrl = storeUrl + "order/checkout";
 
-            var streetNumberStart =
-                getShippingOptionRequest.ShippingAddress.Address1.IndexOfAny("0123456789".ToCharArray());
+            var street = string.Empty;
+            var streetNumber = string.Empty;
+
+            if (! string.IsNullOrEmpty(getShippingOptionRequest.ShippingAddress.Address1))
+            {
+                var streetNumberStart = getShippingOptionRequest.ShippingAddress.Address1.IndexOfAny("0123456789".ToCharArray());
+                street = getShippingOptionRequest.ShippingAddress.Address1.Substring(0, streetNumberStart - 1);
+                streetNumber = getShippingOptionRequest.ShippingAddress.Address1.Substring(streetNumberStart);
+            }
+
+            var rate = _workContext.CurrentCustomer.GetAttribute<decimal>(CustomCustomerAttributeNames.DeliveryMethodRate, _storeContext.CurrentStore.Id);
+            var deliveryMethod = _workContext.CurrentCustomer.GetAttribute<string>(CustomCustomerAttributeNames.DeliveryMethod, _storeContext.CurrentStore.Id);
+            var deliveryMethodAddress = _workContext.CurrentCustomer.GetAttribute<string>(CustomCustomerAttributeNames.DeliveryMethodAddress, _storeContext.CurrentStore.Id);
+
+            var collectPoint = String.Empty;
+            if (rate > 0)
+            {
+                collectPoint = $"<div style='margin-bottom: 10px;'>{deliveryMethodAddress}</div>";
+            }
 
             var bpostShippingOption = new ShippingOption
             {
                 Name = _localizationService.GetResource("MakeIT.Nop.Shipping.Bpost.ShippingManager.ShippingOptionTitle"),
-                Rate = _settings.Standardprice,
+                Rate = (rate > 0) ? rate : _settings.Standardprice,
                 ShippingRateComputationMethodSystemName = "SHM",
                 Description = string.Format(
-                    @"<div><input class='{13}' type='button' onclick=""loadShm('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}', '{8}', '{9}', '{10}', '{11}', '{12}', '{15}', '{16}');"" value='{14}'></div>",
+                    collectPoint + @"<div><input class='{13}' type='button' onclick=""loadShm('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}', '{8}', '{9}', '{10}', '{11}', '{12}', '{15}', '{16}', '{17}');"" value='{14}'></div>",
                     _settings.AccountId, 
                     orderRef, 
                     getShippingOptionRequest.ShippingAddress.Country.TwoLetterIsoCode, 
@@ -93,7 +114,7 @@ namespace MakeIT.Nop.Plugin.Shipping.Bpost.ShippingManager
                     getShippingOptionRequest.ShippingAddress.FirstName, 
                     getShippingOptionRequest.ShippingAddress.LastName,
                     getShippingOptionRequest.Customer.Email,
-                    getShippingOptionRequest.ShippingAddress.Address1.Substring(0, streetNumberStart - 1),
+                    street,
                     getShippingOptionRequest.ShippingAddress.ZipPostalCode,
                     getShippingOptionRequest.ShippingAddress.City,
                     confirmUrl,
@@ -102,8 +123,8 @@ namespace MakeIT.Nop.Plugin.Shipping.Bpost.ShippingManager
                     _settings.ButtonCssClass,
                     _localizationService.GetResource("MakeIT.Nop.Shipping.Bpost.ShippingManager.ButtonCaption"),
                     _workContext.WorkingLanguage.UniqueSeoCode,
-                    getShippingOptionRequest.ShippingAddress.Address1.Substring(streetNumberStart)
-                    )
+                    streetNumber, 
+                    reloadUrl)
             };
             response.ShippingOptions.Add(bpostShippingOption);
 

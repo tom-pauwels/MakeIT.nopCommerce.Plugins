@@ -1,5 +1,5 @@
 ﻿function loadShm(accountId, orderRef, custCountry, checksum, customerFirstName, customerLastName, customerEmail,
-    customerStreet, customerPostalCode, customerCity, confirmUrl, cancelUrl, errorUrl, lang, customerStreetNumber) {
+    customerStreet, customerPostalCode, customerCity, confirmUrl, cancelUrl, errorUrl, lang, customerStreetNumber, reloadUrl) {
     SHM.open({
         integrationType: 'POPUP',
         popupWidth: 1024,
@@ -25,8 +25,7 @@
         closeCallback: function(data) {
             if (data === 'confirm') {
                 //ShippingMethod.save();
-                // do something after client has clicked confirm in shippingmanager
-                window.location.href = 'https://www.selecti.be/order/checkout';
+                window.location.href = reloadUrl;
             } else {
                 //window.top.location.href = "http://www.Shop.test/checkout/producten.php";
             }
