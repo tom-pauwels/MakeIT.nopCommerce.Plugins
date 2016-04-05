@@ -86,18 +86,23 @@ namespace MakeIT.Nop.Plugin.Shipping.Bpost.ShippingManager
             if (! string.IsNullOrEmpty(getShippingOptionRequest.ShippingAddress.Address1))
             {
                 var streetNumberStart = getShippingOptionRequest.ShippingAddress.Address1.IndexOfAny("0123456789".ToCharArray());
-                street = getShippingOptionRequest.ShippingAddress.Address1.Substring(0, streetNumberStart - 1);
-                streetNumber = getShippingOptionRequest.ShippingAddress.Address1.Substring(streetNumberStart);
+                if (streetNumberStart >= 0)
+                {
+                    street = getShippingOptionRequest.ShippingAddress.Address1.Substring(0, streetNumberStart - 1);
+                    streetNumber = getShippingOptionRequest.ShippingAddress.Address1.Substring(streetNumberStart);
+                }
             }
 
             var rate = _workContext.CurrentCustomer.GetAttribute<decimal>(CustomCustomerAttributeNames.DeliveryMethodRate, _storeContext.CurrentStore.Id);
-            var deliveryMethod = _workContext.CurrentCustomer.GetAttribute<string>(CustomCustomerAttributeNames.DeliveryMethod, _storeContext.CurrentStore.Id);
             var deliveryMethodAddress = _workContext.CurrentCustomer.GetAttribute<string>(CustomCustomerAttributeNames.DeliveryMethodAddress, _storeContext.CurrentStore.Id);
+            var deliveryMethod = _workContext.CurrentCustomer.GetAttribute<string>(CustomCustomerAttributeNames.DeliveryMethod, _storeContext.CurrentStore.Id);
+            var deliveryMethodDescription =
+                _localizationService.GetLocaleStringResourceByName($"MakeIT.Nop.Shipping.Bpost.ShippingManager.DeliveryMethod.{deliveryMethod.Replace(" ", "")}");
 
             var collectPoint = String.Empty;
-            if (rate > 0)
+            if (!string.IsNullOrEmpty(deliveryMethodAddress) && deliveryMethodDescription != null)
             {
-                collectPoint = $"<div style='margin-bottom: 10px;'>{deliveryMethodAddress}</div>";
+                collectPoint = $"<div style='margin-bottom: 10px;'>{deliveryMethodDescription.ResourceValue}<br/>{deliveryMethodAddress}</div>";
             }
 
             var bpostShippingOption = new ShippingOption
@@ -161,6 +166,9 @@ namespace MakeIT.Nop.Plugin.Shipping.Bpost.ShippingManager
 
             this.AddOrUpdatePluginLocaleResource("MakeIT.Nop.Shipping.Bpost.ShippingManager.ShippingOptionTitle", "Verzenden met Bpost");
             this.AddOrUpdatePluginLocaleResource("MakeIT.Nop.Shipping.Bpost.ShippingManager.ButtonCaption", "Kies uw verzendmethode...");
+            this.AddOrUpdatePluginLocaleResource("MakeIT.Nop.Shipping.Bpost.ShippingManager.DeliveryMethod.Pugo", "Gekozen aflevermethode: In een afhaalpunt");
+            this.AddOrUpdatePluginLocaleResource("MakeIT.Nop.Shipping.Bpost.ShippingManager.DeliveryMethod.Regular", "Gekozen aflevermethode: Thuis of op kantoor");
+            this.AddOrUpdatePluginLocaleResource("MakeIT.Nop.Shipping.Bpost.ShippingManager.DeliveryMethod.ParcelsDepot", "Gekozen aflevermethode: Pakjesautomaat");
 
             base.Install();
         }
@@ -169,6 +177,9 @@ namespace MakeIT.Nop.Plugin.Shipping.Bpost.ShippingManager
         {
             this.DeletePluginLocaleResource("MakeIT.Nop.Shipping.Bpost.ShippingManager.ShippingOptionTitle");
             this.DeletePluginLocaleResource("MakeIT.Nop.Shipping.Bpost.ShippingManager.ButtonCaption");
+            this.DeletePluginLocaleResource("MakeIT.Nop.Shipping.Bpost.ShippingManager.DeliveryMethod.Pugo");
+            this.DeletePluginLocaleResource("MakeIT.Nop.Shipping.Bpost.ShippingManager.DeliveryMethod.Regular");
+            this.DeletePluginLocaleResource("MakeIT.Nop.Shipping.Bpost.ShippingManager.DeliveryMethod.ParcelsDepot");
 
             base.Uninstall();
         }
