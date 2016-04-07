@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Routing;
+using FluentValidation.Resources;
 using Microsoft.SqlServer.Server;
 using Nop.Core;
 using Nop.Core.Domain.Customers;
+using Nop.Core.Domain.Localization;
 using Nop.Core.Domain.Shipping;
 using Nop.Core.Plugins;
 using Nop.Services.Common;
@@ -60,8 +62,7 @@ namespace MakeIT.Nop.Plugin.Shipping.Bpost.ShippingManager
                 return response;
             }
 
-            // string orderRef = DateTime.Now.ToString("yyyyMMddHHmmss");
-            string orderRef = getShippingOptionRequest.Items.FirstOrDefault().ShoppingCartItem.Id.ToString();
+            string orderRef = "NOP" + getShippingOptionRequest.Items.FirstOrDefault().ShoppingCartItem.Id;
 
             var checkSum = CheckSumCalculator.CalculateChecksum(
                 new Dictionary<string, string>
@@ -96,8 +97,13 @@ namespace MakeIT.Nop.Plugin.Shipping.Bpost.ShippingManager
             var rate = _workContext.CurrentCustomer.GetAttribute<decimal>(CustomCustomerAttributeNames.DeliveryMethodRate, _storeContext.CurrentStore.Id);
             var deliveryMethodAddress = _workContext.CurrentCustomer.GetAttribute<string>(CustomCustomerAttributeNames.DeliveryMethodAddress, _storeContext.CurrentStore.Id);
             var deliveryMethod = _workContext.CurrentCustomer.GetAttribute<string>(CustomCustomerAttributeNames.DeliveryMethod, _storeContext.CurrentStore.Id);
-            var deliveryMethodDescription =
-                _localizationService.GetLocaleStringResourceByName($"MakeIT.Nop.Shipping.Bpost.ShippingManager.DeliveryMethod.{deliveryMethod.Replace(" ", "")}");
+
+            LocaleStringResource deliveryMethodDescription = null;
+            if (!string.IsNullOrEmpty(deliveryMethod))
+            {
+                deliveryMethodDescription = _localizationService.GetLocaleStringResourceByName(
+                    $"MakeIT.Nop.Shipping.Bpost.ShippingManager.DeliveryMethod.{deliveryMethod.Replace(" ", "")}");
+            }
 
             var collectPoint = String.Empty;
             if (!string.IsNullOrEmpty(deliveryMethodAddress) && deliveryMethodDescription != null)

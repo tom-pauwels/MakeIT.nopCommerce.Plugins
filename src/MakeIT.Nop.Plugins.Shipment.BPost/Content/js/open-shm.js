@@ -26,8 +26,10 @@
             if (data === 'confirm') {
                 //ShippingMethod.save();
                 window.location.href = reloadUrl;
-            } else {
-                //window.top.location.href = "http://www.Shop.test/checkout/producten.php";
+                //var rootscopetemp = angular.injector(['ng']).get('$rootScope');
+                //rootscopetemp.$apply(function () {
+                //    rootscopetemp.$broadcast('shippingMethodsContextChanged');
+                //});
             }
         }
     });
