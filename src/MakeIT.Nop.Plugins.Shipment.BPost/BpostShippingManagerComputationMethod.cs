@@ -2,10 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Routing;
-using FluentValidation.Resources;
-using Microsoft.SqlServer.Server;
 using Nop.Core;
-using Nop.Core.Domain.Customers;
 using Nop.Core.Domain.Localization;
 using Nop.Core.Domain.Shipping;
 using Nop.Core.Plugins;
@@ -78,7 +75,7 @@ namespace MakeIT.Nop.Plugin.Shipping.Bpost.ShippingManager
 
             var confirmUrl = storeUrl + "Plugins/BpostShippingManager/ConfirmHandler";
             var cancelUrl =  storeUrl + "Plugins/BpostShippingManager/CancelHandler";
-            var errorUrl = storeUrl + "Plugins/PaymentOgone/ErrorHandler";
+            var errorUrl = storeUrl + "Plugins/BpostShippingManager/ErrorHandler";
             var reloadUrl = storeUrl + "order/checkout";
 
             var street = string.Empty;
@@ -117,7 +114,7 @@ namespace MakeIT.Nop.Plugin.Shipping.Bpost.ShippingManager
                 Rate = (rate > 0) ? rate : _settings.Standardprice,
                 ShippingRateComputationMethodSystemName = "SHM",
                 Description = string.Format(
-                    collectPoint + @"<div><input class='{13}' type='button' onclick=""loadShm('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}', '{8}', '{9}', '{10}', '{11}', '{12}', '{15}', '{16}', '{17}');"" value='{14}'></div>",
+                    collectPoint + @"<div><input class='{13}' type='button' onclick=""loadShm('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}', '{8}', '{9}', '{10}', '{11}', '{12}', '{15}', '{16}', '{17}', '{18}');"" value='{14}'></div>",
                     _settings.AccountId, 
                     orderRef, 
                     getShippingOptionRequest.ShippingAddress.Country.TwoLetterIsoCode, 
@@ -135,7 +132,8 @@ namespace MakeIT.Nop.Plugin.Shipping.Bpost.ShippingManager
                     _localizationService.GetResource("MakeIT.Nop.Shipping.Bpost.ShippingManager.ButtonCaption"),
                     _workContext.WorkingLanguage.UniqueSeoCode,
                     streetNumber, 
-                    reloadUrl)
+                    reloadUrl,
+                    _settings.DoRefresh ? "true" : "false")
             };
             response.ShippingOptions.Add(bpostShippingOption);
 

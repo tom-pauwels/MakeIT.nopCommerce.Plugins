@@ -5,14 +5,18 @@
 <!DOCTYPE html>
 
 <html>
-<head>
-    <title>title</title>
-    <script src="https://shippingmanager.bpost.be/ShmFrontEnd/shm.js"></script>
-    <script> SHM.close("confirm"); </script>
-</head>
-<body>
-    <div>
-
-    </div>
-</body>
+    <head>
+        <script src="https://shippingmanager.bpost.be/ShmFrontEnd/shm.js"></script>
+        <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                SHM.close("confirm");
+            });
+        </script>
+    </head>
+    <body>
+        <div>
+            confirm page
+        </div>
+    </body>
 </html>

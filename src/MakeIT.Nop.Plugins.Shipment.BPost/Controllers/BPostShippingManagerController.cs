@@ -76,7 +76,8 @@ namespace MakeIT.Nop.Plugin.Shipping.Bpost.ShippingManager.Controllers
                 AccountId = _bpostShippingManagerSettings.AccountId,
                 PassPhrase = _bpostShippingManagerSettings.PassPhrase,
                 ButtonCssClass = _bpostShippingManagerSettings.ButtonCssClass,
-                Standardprice = _bpostShippingManagerSettings.Standardprice
+                Standardprice = _bpostShippingManagerSettings.Standardprice,
+                DoRefresh = _bpostShippingManagerSettings.DoRefresh
             };
 
             return View("~/Plugins/Shipping.BPostShippingManager/Views/BPostShippingManager/Configure.cshtml", model);
@@ -96,6 +97,7 @@ namespace MakeIT.Nop.Plugin.Shipping.Bpost.ShippingManager.Controllers
             _bpostShippingManagerSettings.PassPhrase = model.PassPhrase;
             _bpostShippingManagerSettings.ButtonCssClass = model.ButtonCssClass;
             _bpostShippingManagerSettings.Standardprice = model.Standardprice;
+            _bpostShippingManagerSettings.DoRefresh = model.DoRefresh;
 
             _settingService.SaveSetting(_bpostShippingManagerSettings);
 
@@ -107,51 +109,55 @@ namespace MakeIT.Nop.Plugin.Shipping.Bpost.ShippingManager.Controllers
         [ValidateInput(false)]
         public ActionResult ConfirmHandler(PostBackModel model)
         {
-            _logger.InsertLog(LogLevel.Information, "Entered ConfirmHandler");
+            try
+            {
+                _logger.InsertLog(LogLevel.Information, "Entered ConfirmHandler", customer: _workContext.CurrentCustomer);
 
-            UpdateShippingOptionRate(model);
-            UpdateCheckoutAttribute(model);
+                UpdateShippingOptionRate(model);
+                UpdateCheckoutAttribute(model);
 
-            //if (model.DeliveryMethod.Equals(DeliveryMethod.Regular, StringComparison.InvariantCultureIgnoreCase))
-            //{
-            //    var newCountry = _countryService.GetCountryByTwoLetterIsoCode(model.CustomerCountry);
+                //if (model.DeliveryMethod.Equals(DeliveryMethod.Regular, StringComparison.InvariantCultureIgnoreCase))
+                //{
+                //    var newCountry = _countryService.GetCountryByTwoLetterIsoCode(model.CustomerCountry);
 
-            //    var address = _workContext.CurrentCustomer.Addresses.ToList().FindAddress(
-            //        model.CustomerFirstName, model.CustomerLastName, model.CustomerPhoneNumber,
-            //        model.CustomerEmail, _workContext.CurrentCustomer.ShippingAddress.FaxNumber,
-            //        _workContext.CurrentCustomer.ShippingAddress.Company,
-            //        $"{model.CustomerStreet} {model.CustomerStreetNumber}",
-            //        $"{model.CustomerBox}", model.CustomerCity, _workContext.CurrentCustomer.ShippingAddress.StateProvinceId,
-            //        model.CustomerPostalCode, newCountry.Id, string.Empty);
-            //    if (address == null)
-            //    {
-            //        address = new Address
-            //        {
-            //            CreatedOnUtc = DateTime.UtcNow,
-            //            Address1 = $"{model.CustomerStreet} {model.CustomerStreetNumber}",
-            //            Address2 = $"{model.CustomerBox}",
-            //            City = $"{model.CustomerCity}",
-            //            ZipPostalCode = $"{model.CustomerPostalCode}",
-            //            Email = $"{model.CustomerEmail}",
-            //            FirstName = $"{model.CustomerFirstName}",
-            //            LastName = $"{model.CustomerLastName}",
-            //            PhoneNumber = $"{model.CustomerPhoneNumber}",
-            //            Country = newCountry
-            //        };
+                //    var address = _workContext.CurrentCustomer.Addresses.ToList().FindAddress(
+                //        model.CustomerFirstName, model.CustomerLastName, model.CustomerPhoneNumber,
+                //        model.CustomerEmail, _workContext.CurrentCustomer.ShippingAddress.FaxNumber,
+                //        _workContext.CurrentCustomer.ShippingAddress.Company,
+                //        $"{model.CustomerStreet} {model.CustomerStreetNumber}",
+                //        $"{model.CustomerBox}", model.CustomerCity, _workContext.CurrentCustomer.ShippingAddress.StateProvinceId,
+                //        model.CustomerPostalCode, newCountry.Id, string.Empty);
+                //    if (address == null)
+                //    {
+                //        address = new Address
+                //        {
+                //            CreatedOnUtc = DateTime.UtcNow,
+                //            Address1 = $"{model.CustomerStreet} {model.CustomerStreetNumber}",
+                //            Address2 = $"{model.CustomerBox}",
+                //            City = $"{model.CustomerCity}",
+                //            ZipPostalCode = $"{model.CustomerPostalCode}",
+                //            Email = $"{model.CustomerEmail}",
+                //            FirstName = $"{model.CustomerFirstName}",
+                //            LastName = $"{model.CustomerLastName}",
+                //            PhoneNumber = $"{model.CustomerPhoneNumber}",
+                //            Country = newCountry
+                //        };
 
-            //        _workContext.CurrentCustomer.Addresses.Add(address);
-            //    }
+                //        _workContext.CurrentCustomer.Addresses.Add(address);
+                //    }
 
-            //    _workContext.CurrentCustomer.ShippingAddress = address;
-            //    _customerService.UpdateCustomer(_workContext.CurrentCustomer);
+                //    _workContext.CurrentCustomer.ShippingAddress = address;
+                //    _customerService.UpdateCustomer(_workContext.CurrentCustomer);
 
-            //    // Clear possible checkout attribute
-            //    _genericAttributeService.SaveAttribute(_workContext.CurrentCustomer, SystemCustomerAttributeNames.CheckoutAttributes, string.Empty, _storeContext.CurrentStore.Id);
-            //}
-            //else
-            //{
-            //    UpdateCheckoutAttribute(model);
-            //}
+                //    // Clear possible checkout attribute
+                //    _genericAttributeService.SaveAttribute(_workContext.CurrentCustomer, SystemCustomerAttributeNames.CheckoutAttributes, string.Empty, _storeContext.CurrentStore.Id);
+                //}
+
+            }
+            catch (Exception ex)
+            {
+                _logger.InsertLog(LogLevel.Error, ex.Message, ex.StackTrace, _workContext.CurrentCustomer);
+            }
 
             return View("~/Plugins/Shipping.BPostShippingManager/Views/BPostShippingManager/ConfirmHandler.cshtml");
         }
