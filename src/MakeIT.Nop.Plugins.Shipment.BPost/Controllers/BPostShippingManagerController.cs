@@ -4,7 +4,6 @@ using System.Linq;
 using System.Web.Mvc;
 using MakeIT.Nop.Plugin.Shipping.Bpost.ShippingManager.Models;
 using Nop.Core;
-using Nop.Core.Domain.Common;
 using Nop.Core.Domain.Customers;
 using Nop.Core.Domain.Logging;
 using Nop.Core.Domain.Orders;
@@ -29,6 +28,7 @@ namespace MakeIT.Nop.Plugin.Shipping.Bpost.ShippingManager.Controllers
         private readonly IStoreMappingService _storeMappingService;
         private readonly IGenericAttributeService _genericAttributeService;
         private readonly BpostShippingManagerSettings _bpostShippingManagerSettings;
+        private readonly BpostShippingManagerSettings _settings;
         private readonly ILogger _logger;
         private readonly ISettingService _settingService;
         private readonly ILocalizationService _localizationService;
@@ -51,6 +51,7 @@ namespace MakeIT.Nop.Plugin.Shipping.Bpost.ShippingManager.Controllers
             ICountryService countryService,
             ICheckoutAttributeParser checkoutAttributeParser,
             BpostShippingManagerSettings bpostShippingManagerSettings,
+            BpostShippingManagerSettings settings,
             ILogger logger)
         {
             _storeContext = storeContext;
@@ -58,6 +59,7 @@ namespace MakeIT.Nop.Plugin.Shipping.Bpost.ShippingManager.Controllers
             _storeMappingService = storeMappingService;
             _genericAttributeService = genericAttributeService;
             _bpostShippingManagerSettings = bpostShippingManagerSettings;
+            _settings = settings;
             _logger = logger;
             _settingService = settingService;
             _localizationService = localizationService;
@@ -115,6 +117,9 @@ namespace MakeIT.Nop.Plugin.Shipping.Bpost.ShippingManager.Controllers
 
                 UpdateShippingOptionRate(model);
                 UpdateCheckoutAttribute(model);
+
+                var doRefresh = _settings.DoRefresh ? "true" : "false";
+                ViewData["data"] = $"confirm|{doRefresh}";
 
                 //if (model.DeliveryMethod.Equals(DeliveryMethod.Regular, StringComparison.InvariantCultureIgnoreCase))
                 //{

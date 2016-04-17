@@ -23,17 +23,13 @@
             errorUrl: errorUrl,
             checksum: checksum
         },
-        closeCallback: function(data) {
-            if (data === 'confirm') {
-                if (doRefresh === 'false') {
+        closeCallback: function (data) {
+            var parts = data.split("|");
+            if (parts[0] === 'confirm') {
+                if (parts[1] === 'false') {
                     ShippingMethod.save();
                 } else {
-                    window.location.href = reloadUrl;
-
-                    //var rootscopetemp = angular.injector(['ng']).get('$rootScope');
-                    //rootscopetemp.$apply(function () {
-                    //    rootscopetemp.$broadcast('shippingMethodsContextChanged');
-                    //});
+                    $.event.trigger({ type: "RefreshOnePageCheckoutEvent" });
                 }
             }
         }
