@@ -1,10 +1,9 @@
 ﻿function loadShm(accountId, orderRef, custCountry, checksum, customerFirstName, customerLastName, customerEmail,
-    customerStreet, customerPostalCode, customerCity, confirmUrl, cancelUrl, errorUrl, lang, customerStreetNumber,
-    reloadUrl, doRefresh) {
+    customerStreet, customerPostalCode, customerCity, confirmUrl, cancelUrl, errorUrl, lang, customerStreetNumber) {
+
     SHM.open({
-        integrationType: 'POPUP',
-        popupWidth: 1024,
-        popupHeight: 600,
+        integrationType: 'INLINE',
+        inlineContainerId: 'shm-inline-container',
         parameters: {
             accountId: accountId,
             lang: lang,
@@ -30,6 +29,7 @@
                     ShippingMethod.save();
                 } else {
                     $.event.trigger({ type: "RefreshOnePageCheckoutEvent" });
+                    $('#shm-inline-container').hide();
                 }
             }
         }
