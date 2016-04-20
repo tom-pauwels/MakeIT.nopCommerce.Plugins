@@ -32,10 +32,7 @@ namespace MakeIT.Nop.Plugin.Shipping.Bpost.ShippingManager.Controllers
         private readonly ILogger _logger;
         private readonly ISettingService _settingService;
         private readonly ILocalizationService _localizationService;
-        private readonly IShippingService _shippingService;
         private readonly ICheckoutAttributeService _checkoutAttributeService;
-        private readonly ICustomerService _customerService;
-        private readonly ICountryService _countryService;
         private readonly ICheckoutAttributeParser _checkoutAttributeParser;
 
         public BPostShippingManagerController(
@@ -45,10 +42,7 @@ namespace MakeIT.Nop.Plugin.Shipping.Bpost.ShippingManager.Controllers
             IGenericAttributeService genericAttributeService,
             ISettingService settingService,
             ILocalizationService localizationService,
-            IShippingService shippingService,
             ICheckoutAttributeService checkoutAttributeService,
-            ICustomerService customerService,
-            ICountryService countryService,
             ICheckoutAttributeParser checkoutAttributeParser,
             BpostShippingManagerSettings bpostShippingManagerSettings,
             BpostShippingManagerSettings settings,
@@ -63,10 +57,7 @@ namespace MakeIT.Nop.Plugin.Shipping.Bpost.ShippingManager.Controllers
             _logger = logger;
             _settingService = settingService;
             _localizationService = localizationService;
-            _shippingService = shippingService;
             _checkoutAttributeService = checkoutAttributeService;
-            _customerService = customerService;
-            _countryService = countryService;
             _checkoutAttributeParser = checkoutAttributeParser;
         }
 
@@ -206,16 +197,8 @@ namespace MakeIT.Nop.Plugin.Shipping.Bpost.ShippingManager.Controllers
             var shippingOptions =
                 _workContext.CurrentCustomer.GetAttribute<List<ShippingOption>>(
                     SystemCustomerAttributeNames.OfferedShippingOptions, _storeContext.CurrentStore.Id);
-            
-            //loaded cached results. let's filter result by a chosen shipping rate computation method
-            shippingOptions =
-                shippingOptions.Where(
-                    so =>
-                        so.ShippingRateComputationMethodSystemName.Equals("Shipping.Bpost.ShippingManager",
-                            StringComparison.InvariantCultureIgnoreCase))
-                    .ToList();
 
-            var shippingOption = shippingOptions.FirstOrDefault();
+            var shippingOption = _workContext.GetBpostShippingOption(_storeContext);
             if (shippingOption != null)
             {
                 shippingOption.Rate = model.DeliveryMethodPriceTotalEuro;

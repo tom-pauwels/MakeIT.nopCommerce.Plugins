@@ -107,7 +107,7 @@ namespace MakeIT.Nop.Plugin.Shipping.Bpost.ShippingManager
                 collectPoint = $"<div style='margin-bottom: 10px;'>{deliveryMethodDescription.ResourceValue}<br/>{deliveryMethodAddress}</div>";
             }
 
-            var bpostShippingOption = new ShippingOption
+            var shmShippingOption = new ShippingOption
             {
                 Name = _localizationService.GetResource("MakeIT.Nop.Shipping.Bpost.ShippingManager.ShippingOptionTitle"),
                 Rate = (rate > 0) ? rate : _settings.Standardprice,
@@ -115,11 +115,10 @@ namespace MakeIT.Nop.Plugin.Shipping.Bpost.ShippingManager
                 Description = string.Format(
 //                    collectPoint + @"<div><input class='{13}' type='button' onclick=""loadShm('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}', '{8}', '{9}', '{10}', '{11}', '{12}', '{15}', '{16}');"" value='{14}'><div id='shm-inline-container' style='width: 100%; height: 600px;'></div>",
                     collectPoint +
-                        @"<div><input class='{13}' type='button' onclick=""loadShm('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}', '{8}', '{9}', '{10}', '{11}', '{12}', '{15}', '{16}');"" value='{14}'><div id='shm-inline-container' style='width: 100%; height: 600px;'></div>" + 
+                        @"<div><input class='{13}' type='button' onclick=""loadShm('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}', '{8}', '{9}', '{10}', '{11}', '{12}', '{15}', '{16}');"" value='{14}'></div>" + 
                         @"<div id='shm-inline-container' style='width: 100%; height: 500px;'></div>
                         <script> 
                             $(document).ready(function () {{
-                                $.delay(2000);
                                 loadShm('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}', '{8}', '{9}', '{10}', '{11}', '{12}', '{15}', '{16}');
                             }});
                         </script>",
@@ -142,7 +141,7 @@ namespace MakeIT.Nop.Plugin.Shipping.Bpost.ShippingManager
                     streetNumber)
             };
 
-            response.ShippingOptions.Add(bpostShippingOption);
+            response.ShippingOptions.Add(shmShippingOption);
 
             return response;
         }
