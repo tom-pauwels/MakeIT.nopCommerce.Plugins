@@ -95,10 +95,29 @@ namespace MakeIT.Nop.Plugin.Shipping.Bpost.ShippingManager
             var deliveryMethod = _workContext.CurrentCustomer.GetAttribute<string>(CustomCustomerAttributeNames.DeliveryMethod, _storeContext.CurrentStore.Id);
 
             LocaleStringResource deliveryMethodDescription = null;
+            var buttonDiv = string.Empty;
+            var startupShmScript = @"
+                <script>
+                    $(document).ready(function() {
+                        loadShm('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}', '{8}', '{9}', '{10}', '{11}', '{12}', '{15}', '{16}');
+                    });
+                    </script>";
+
             if (!string.IsNullOrEmpty(deliveryMethod))
             {
                 deliveryMethodDescription = _localizationService.GetLocaleStringResourceByName(
                     $"MakeIT.Nop.Shipping.Bpost.ShippingManager.DeliveryMethod.{deliveryMethod.Replace(" ", "")}");
+
+                buttonDiv =
+                    @"<div><input class='{13}' type='button' onclick=""loadShm('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}', '{8}', '{9}', '{10}', '{11}', '{12}', '{15}', '{16}');"" value='{14}'></div>";
+
+                startupShmScript = @"
+                    <script>
+                        $(document).ready(function() {
+                            collapseShm();
+                        });
+                    </script>
+                    ";
             }
 
             var collectPoint = String.Empty;
@@ -107,38 +126,33 @@ namespace MakeIT.Nop.Plugin.Shipping.Bpost.ShippingManager
                 collectPoint = $"<div style='margin-bottom: 10px;'>{deliveryMethodDescription.ResourceValue}<br/>{deliveryMethodAddress}</div>";
             }
 
+            var description = string.Format(
+                collectPoint + buttonDiv +
+                @"<div id='shm-inline-container' style='width: 100%; margin-top: 10px;'></div>",
+                _settings.AccountId,
+                orderRef,
+                getShippingOptionRequest.ShippingAddress.Country.TwoLetterIsoCode,
+                checkSum,
+                getShippingOptionRequest.ShippingAddress.FirstName,
+                getShippingOptionRequest.ShippingAddress.LastName,
+                getShippingOptionRequest.Customer.Email,
+                street,
+                getShippingOptionRequest.ShippingAddress.ZipPostalCode,
+                getShippingOptionRequest.ShippingAddress.City,
+                confirmUrl,
+                cancelUrl,
+                errorUrl,
+                _settings.ButtonCssClass,
+                _localizationService.GetResource("MakeIT.Nop.Shipping.Bpost.ShippingManager.ButtonCaption"),
+                _workContext.WorkingLanguage.UniqueSeoCode,
+                streetNumber);
+
             var shmShippingOption = new ShippingOption
             {
                 Name = _localizationService.GetResource("MakeIT.Nop.Shipping.Bpost.ShippingManager.ShippingOptionTitle"),
                 Rate = (rate > 0) ? rate : _settings.Standardprice,
                 ShippingRateComputationMethodSystemName = "SHM",
-                Description = string.Format(
-//                    collectPoint + @"<div><input class='{13}' type='button' onclick=""loadShm('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}', '{8}', '{9}', '{10}', '{11}', '{12}', '{15}', '{16}');"" value='{14}'><div id='shm-inline-container' style='width: 100%; height: 600px;'></div>",
-                    collectPoint +
-                        @"<div><input class='{13}' type='button' onclick=""loadShm('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}', '{8}', '{9}', '{10}', '{11}', '{12}', '{15}', '{16}');"" value='{14}'></div>" + 
-                        @"<div id='shm-inline-container' style='width: 100%; height: 500px;'></div>
-                        <script> 
-                            $(document).ready(function () {{
-                                loadShm('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}', '{8}', '{9}', '{10}', '{11}', '{12}', '{15}', '{16}');
-                            }});
-                        </script>",
-                    _settings.AccountId,
-                    orderRef,
-                    getShippingOptionRequest.ShippingAddress.Country.TwoLetterIsoCode,
-                    checkSum,
-                    getShippingOptionRequest.ShippingAddress.FirstName,
-                    getShippingOptionRequest.ShippingAddress.LastName,
-                    getShippingOptionRequest.Customer.Email,
-                    street,
-                    getShippingOptionRequest.ShippingAddress.ZipPostalCode,
-                    getShippingOptionRequest.ShippingAddress.City,
-                    confirmUrl,
-                    cancelUrl,
-                    errorUrl,
-                    _settings.ButtonCssClass,
-                    _localizationService.GetResource("MakeIT.Nop.Shipping.Bpost.ShippingManager.ButtonCaption"),
-                    _workContext.WorkingLanguage.UniqueSeoCode,
-                    streetNumber)
+                Description = description + startupShmScript
             };
 
             response.ShippingOptions.Add(shmShippingOption);

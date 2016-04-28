@@ -1,6 +1,8 @@
 ﻿function loadShm(accountId, orderRef, custCountry, checksum, customerFirstName, customerLastName, customerEmail,
     customerStreet, customerPostalCode, customerCity, confirmUrl, cancelUrl, errorUrl, lang, customerStreetNumber) {
 
+    expandShm();
+
     SHM.open({
         integrationType: 'INLINE',
         inlineContainerId: 'shm-inline-container',
@@ -29,9 +31,19 @@
                     ShippingMethod.save();
                 } else {
                     $.event.trigger({ type: "RefreshOnePageCheckoutEvent" });
-                    $('#shm-inline-container').hide();
+                    collapseShm();
                 }
+            } else {
+                collapseShm();
             }
         }
     });
+}
+
+function collapseShm() {
+    $("#shm-inline-container").height(0);
+}
+
+function expandShm() {
+    $("#shm-inline-container").height(550);
 }
