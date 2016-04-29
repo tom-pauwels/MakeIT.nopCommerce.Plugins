@@ -22,9 +22,9 @@ namespace MakeIT.Nop.Plugin.Shipping.Bpost.ShippingManager
 
         public void HandleEvent(OrderPlacedEvent eventMessage)
         {
-            //_genericAttributeService.SaveAttribute<decimal>(_workContext.CurrentCustomer, CustomCustomerAttributeNames.DeliveryMethodRate, 0, _storeContext.CurrentStore.Id);
-            //_genericAttributeService.SaveAttribute(_workContext.CurrentCustomer, CustomCustomerAttributeNames.DeliveryMethodAddress, "", _storeContext.CurrentStore.Id);
-            //_genericAttributeService.SaveAttribute(_workContext.CurrentCustomer, CustomCustomerAttributeNames.DeliveryMethod, "", _storeContext.CurrentStore.Id);
+            _genericAttributeService.SaveAttribute<decimal>(_workContext.CurrentCustomer, CustomCustomerAttributeNames.DeliveryMethodRate, 0, _storeContext.CurrentStore.Id);
+            _genericAttributeService.SaveAttribute(_workContext.CurrentCustomer, CustomCustomerAttributeNames.DeliveryMethodAddress, "", _storeContext.CurrentStore.Id);
+            _genericAttributeService.SaveAttribute(_workContext.CurrentCustomer, CustomCustomerAttributeNames.DeliveryMethod, "", _storeContext.CurrentStore.Id);
         }
     }
 }

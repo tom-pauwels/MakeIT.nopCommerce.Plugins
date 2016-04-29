@@ -96,12 +96,28 @@ namespace MakeIT.Nop.Plugin.Shipping.Bpost.ShippingManager
 
             LocaleStringResource deliveryMethodDescription = null;
             var buttonDiv = string.Empty;
-            var startupShmScript = @"
-                <script>
-                    $(document).ready(function() {
-                        loadShm('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}', '{8}', '{9}', '{10}', '{11}', '{12}', '{15}', '{16}');
-                    });
-                    </script>";
+
+            var loadShm = string.Format(
+                "loadShm('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}', '{8}', '{9}', '{10}', '{11}', '{12}', '{15}', '{16}');",
+                _settings.AccountId,
+                orderRef,
+                getShippingOptionRequest.ShippingAddress.Country.TwoLetterIsoCode,
+                checkSum,
+                getShippingOptionRequest.ShippingAddress.FirstName,
+                getShippingOptionRequest.ShippingAddress.LastName,
+                getShippingOptionRequest.Customer.Email,
+                street,
+                getShippingOptionRequest.ShippingAddress.ZipPostalCode,
+                getShippingOptionRequest.ShippingAddress.City,
+                confirmUrl,
+                cancelUrl,
+                errorUrl,
+                _settings.ButtonCssClass,
+                _localizationService.GetResource("MakeIT.Nop.Shipping.Bpost.ShippingManager.ButtonCaption"),
+                _workContext.WorkingLanguage.UniqueSeoCode,
+                streetNumber);
+
+            var startupShmScript = @"<script>$(document).ready(function() { "+ loadShm + " expandShm(); }); </script>";
 
             if (!string.IsNullOrEmpty(deliveryMethod))
             {
