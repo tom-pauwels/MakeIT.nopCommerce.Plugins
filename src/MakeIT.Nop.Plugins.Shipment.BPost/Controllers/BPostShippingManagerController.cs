@@ -110,7 +110,13 @@ namespace MakeIT.Nop.Plugin.Shipping.Bpost.ShippingManager.Controllers
                 UpdateCheckoutAttribute(model);
 
                 var doRefresh = _settings.DoRefresh ? "true" : "false";
-                ViewData["data"] = $"confirm|{doRefresh}";
+
+                var storeUrl = _storeContext.CurrentStore.Url;
+
+                if (!storeUrl.EndsWith("/")) storeUrl += "/";
+                var checkoutUrl = storeUrl + "order/checkout";
+
+                ViewData["data"] = $"confirm|{doRefresh}|{checkoutUrl}";
 
                 //if (model.DeliveryMethod.Equals(DeliveryMethod.Regular, StringComparison.InvariantCultureIgnoreCase))
                 //{
