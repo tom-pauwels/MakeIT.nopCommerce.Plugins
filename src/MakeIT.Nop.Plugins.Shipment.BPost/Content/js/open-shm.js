@@ -5,6 +5,7 @@
 
     SHM.open({
         integrationType: 'INLINE',
+        forceIntegrationType: true,
         inlineContainerId: 'shm-inline-container',
         parameters: {
             accountId: accountId,
