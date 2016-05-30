@@ -31,13 +31,16 @@
                 if (parts[1] === 'false') {
                     ShippingMethod.save();
                 } else {
-                    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-                        // tasks to do if it is a Mobile Device
-                        window.location.href = parts[2];
-                    } else {
-                        $.event.trigger({ type: "RefreshOnePageCheckoutEvent" });
-                        $("#shm-inline-container").height(0);
-                    }
+                    $("#shm-inline-container").height(0);
+                    $.event.trigger({ type: "RefreshOnePageCheckoutEvent" });
+
+                    //if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                    //    // tasks to do if it is a Mobile Device
+                    //    window.location.href = parts[2];
+                    //} else {
+                        //$("#shm-inline-container").height(0);
+                        //$.event.trigger({ type: "RefreshOnePageCheckoutEvent" });
+                    //}
                 }
             } else {
                 $("#shm-inline-container").height(0);
