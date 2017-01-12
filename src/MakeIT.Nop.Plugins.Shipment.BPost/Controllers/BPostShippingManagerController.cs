@@ -10,12 +10,9 @@ using Nop.Core.Domain.Orders;
 using Nop.Core.Domain.Shipping;
 using Nop.Services.Common;
 using Nop.Services.Configuration;
-using Nop.Services.Customers;
-using Nop.Services.Directory;
 using Nop.Services.Localization;
 using Nop.Services.Logging;
 using Nop.Services.Orders;
-using Nop.Services.Shipping;
 using Nop.Services.Stores;
 using Nop.Web.Framework.Controllers;
 
@@ -164,6 +161,7 @@ namespace MakeIT.Nop.Plugin.Shipping.Bpost.ShippingManager.Controllers
             return View("~/Plugins/Shipping.BPostShippingManager/Views/BPostShippingManager/ConfirmHandler.cshtml");
         }
 
+        [NonAction]
         private void UpdateCheckoutAttribute(PostBackModel model)
         {
             var cart = _workContext.CurrentCustomer.ShoppingCartItems
@@ -198,6 +196,7 @@ namespace MakeIT.Nop.Plugin.Shipping.Bpost.ShippingManager.Controllers
             _genericAttributeService.SaveAttribute(_workContext.CurrentCustomer, CustomCustomerAttributeNames.DeliveryMethodAddress, collectPoint, _storeContext.CurrentStore.Id);
         }
 
+        [NonAction]
         private void UpdateShippingOptionRate(PostBackModel model)
         {
             var shippingOptions =

@@ -1,10 +1,18 @@
+24/09/2016 - v1.10.0
+--------------------------------------------------------------
+- Release for nopCommerce v3.80
+
+31/03/2016 - v1.9.1
+--------------------------------------------------------------
+- Release for nopCommerce v3.60, 3.70 and 3.71
+
 31/03/2015 - v1.9.0
 --------------------------------------------------------------
-- Added support for nopCommerce v3.50
+- Release for nopCommerce v3.50
 
 12/09/2014 - v1.8.0
 --------------------------------------------------------------
-- Added support for nopCommerce v3.40
+- Release for nopCommerce v3.40
 - Added dynamic template parameter in settings (TP post variable)
 
 8/2/2014 - v1.7.0
@@ -14,12 +22,12 @@
 
 30/1/2014 - v1.6.0
 --------------------------------------------------------------
-- Release for nopCommerce 3.20
+- Release for nopCommerce v3.20
 
 
 1/7/2013 - v1.5.0
 --------------------------------------------------------------
-- Release for nopCommerce 3.00
+- Release for nopCommerce v3.00
 
 
 1/7/2013 - v1.4.2

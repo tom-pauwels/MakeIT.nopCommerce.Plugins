@@ -4,7 +4,7 @@
     expandShm();
 
     SHM.open({
-        integrationType: 'INLINE',
+        integrationType: 'POPUP',
         forceIntegrationType: true,
         inlineContainerId: 'shm-inline-container',
         parameters: {
@@ -50,9 +50,9 @@
 }
 
 function collapseShm() {
-    $("#shm-inline-container").height(0);
+    //$("#shm-inline-container").height(0);
 }
 
 function expandShm() {
-    $("#shm-inline-container").height(550);
+    //$("#shm-inline-container").height(550);
 }

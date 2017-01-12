@@ -98,7 +98,7 @@ namespace MakeIT.Nop.Plugin.Shipping.Bpost.ShippingManager
             var buttonDiv = string.Empty;
 
             var loadShm = string.Format(
-                "loadShm('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}', '{8}', '{9}', '{10}', '{11}', '{12}', '{15}', '{16}');",
+                "loadShm('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}', '{8}', '{9}', '{10}', '{11}', '{12}', '{13}', '{14}');",
                 _settings.AccountId,
                 orderRef,
                 getShippingOptionRequest.ShippingAddress.Country.TwoLetterIsoCode,
@@ -112,8 +112,6 @@ namespace MakeIT.Nop.Plugin.Shipping.Bpost.ShippingManager
                 confirmUrl,
                 cancelUrl,
                 errorUrl,
-                _settings.ButtonCssClass,
-                _localizationService.GetResource("MakeIT.Nop.Shipping.Bpost.ShippingManager.ButtonCaption"),
                 _workContext.WorkingLanguage.UniqueSeoCode,
                 streetNumber);
 
@@ -167,7 +165,7 @@ namespace MakeIT.Nop.Plugin.Shipping.Bpost.ShippingManager
             {
                 Name = _localizationService.GetResource("MakeIT.Nop.Shipping.Bpost.ShippingManager.ShippingOptionTitle"),
                 Rate = (rate > 0) ? rate : _settings.Standardprice,
-                ShippingRateComputationMethodSystemName = "SHM",
+                ShippingRateComputationMethodSystemName = "Shipping.Bpost.ShippingManager",
                 Description = description + startupShmScript
             };
 

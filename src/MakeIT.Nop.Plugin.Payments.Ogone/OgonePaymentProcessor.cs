@@ -17,6 +17,7 @@ using Nop.Services.Localization;
 using Nop.Services.Orders;
 using Nop.Services.Payments;
 using System.Security.Cryptography;
+using Nop.Services.Common;
 using Nop.Services.Security;
 
 namespace MakeIT.Nop.Plugin.Payments.Ogone
@@ -37,8 +38,9 @@ namespace MakeIT.Nop.Plugin.Payments.Ogone
         private readonly IStoreContext _storeContext;
 		private readonly IOrderService _orderService;
 		private readonly IEncryptionService _encryptionService;
-		private readonly IWorkContext _workContext;
-
+	    private readonly IGenericAttributeService _genericAttributeService;
+	    private readonly IWorkContext _workContext;
+        
 		#endregion
 
 		public OgonePaymentProcessor(
@@ -51,7 +53,8 @@ namespace MakeIT.Nop.Plugin.Payments.Ogone
 			ILocalizationService localizationService,
  			IOrderService orderService,
 			IEncryptionService encryptionService,
-			IWorkContext workContext)
+            IGenericAttributeService genericAttributeService,
+            IWorkContext workContext)
 		{
 			_ogonePaymentSettings = ogonePaymentSettings;
 			_settingService = settingService;
@@ -62,7 +65,8 @@ namespace MakeIT.Nop.Plugin.Payments.Ogone
 			_localizationService = localizationService;
 			_orderService = orderService;
 			_encryptionService = encryptionService;
-			_workContext = workContext;
+		    _genericAttributeService = genericAttributeService;
+		    _workContext = workContext;
 			_encryptionService = encryptionService;
 
 #if DEBUG
@@ -148,6 +152,10 @@ namespace MakeIT.Nop.Plugin.Payments.Ogone
             
             if (!string.IsNullOrEmpty(_ogonePaymentSettings.ExclPmList))
                 remotePost.Add("EXCLPMLIST", _ogonePaymentSettings.ExclPmList);
+
+            var comParameter = order.GetAttribute<string>("COM", _storeContext.CurrentStore.Id);
+            if (!string.IsNullOrEmpty(comParameter))
+                remotePost.Add("COM", comParameter);
 
             var shaInPassPhrase = _encryptionService.DecryptText(_ogonePaymentSettings.SHAInPassPhrase);
 		    
