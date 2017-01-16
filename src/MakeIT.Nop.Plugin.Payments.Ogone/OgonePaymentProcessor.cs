@@ -17,6 +17,7 @@ using Nop.Services.Localization;
 using Nop.Services.Orders;
 using Nop.Services.Payments;
 using System.Security.Cryptography;
+using Nop.Services.Common;
 using Nop.Services.Security;
 
 namespace MakeIT.Nop.Plugin.Payments.Ogone
@@ -148,6 +149,10 @@ namespace MakeIT.Nop.Plugin.Payments.Ogone
             
             if (!string.IsNullOrEmpty(_ogonePaymentSettings.ExclPmList))
                 remotePost.Add("EXCLPMLIST", _ogonePaymentSettings.ExclPmList);
+
+            var comParameter = order.GetAttribute<string>("COM", _storeContext.CurrentStore.Id);
+            if (!string.IsNullOrEmpty(comParameter))
+                remotePost.Add("COM", comParameter);
 
             var shaInPassPhrase = _encryptionService.DecryptText(_ogonePaymentSettings.SHAInPassPhrase);
 		    
