@@ -1,8 +1,0 @@
-﻿Group: Shipping rate computation
-FriendlyName: BPost Shipping Manager
-SystemName: Shipping.Bpost.ShippingManager
-Version: 1.2
-SupportedVersions: 3.60,3.70,3.80
-Author: Make-IT Consulting
-DisplayOrder: 1
-FileName: MakeIT.Nop.Plugin.Shipping.Bpost.ShippingManager.dll
