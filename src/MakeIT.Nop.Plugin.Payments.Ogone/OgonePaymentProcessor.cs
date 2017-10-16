@@ -445,6 +445,8 @@ namespace MakeIT.Nop.Plugin.Payments.Ogone
 	        get { return true; }
 	    }
 
+	    public string PaymentMethodDescription => "Ingenico Payment implementation";
+
 	    #endregion
 
 	}

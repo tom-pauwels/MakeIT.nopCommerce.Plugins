@@ -1,0 +1,236 @@
+﻿@{
+    Layout = "";
+}
+@using MakeIT.Nop.Plugin.Payments.Ogone.Models;
+@model MakeIT.Nop.Plugin.Payments.Ogone.Models.ConfigurationModel
+@using Nop.Web.Framework;
+
+@Html.Action("StoreScopeConfiguration", "Setting", new { area = "Admin" })
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="panel-group">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="form-group">
+                    <div class="col-md-3">
+                        @Html.OverrideStoreCheckboxFor(model => model.PSPId_OverrideForStore, model => model.PSPId, Model.ActiveStoreScopeConfiguration)
+                        @Html.NopLabelFor(model => model.PSPId)
+                    </div>
+                    <div class="col-md-9">
+                        @Html.EditorFor(model => model.PSPId)
+                        @Html.ValidationMessageFor(model => model.PSPId)
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-3">
+                        @Html.OverrideStoreCheckboxFor(model => model.SHAInPassPhrase_OverrideForStore, model => model.SHAInPassPhrase, Model.ActiveStoreScopeConfiguration)
+                        @Html.NopLabelFor(model => model.SHAInPassPhrase)
+                    </div>
+                    <div class="col-md-9">
+                        @Html.EditorFor(model => model.SHAInPassPhrase)
+                        @Html.ValidationMessageFor(model => model.SHAInPassPhrase)
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-3">
+                        @Html.OverrideStoreCheckboxFor(model => model.SHAOutPassPhrase_OverrideForStore, model => model.SHAOutPassPhrase, Model.ActiveStoreScopeConfiguration)
+                        @Html.NopLabelFor(model => model.SHAOutPassPhrase)
+                    </div>
+                    <div class="col-md-9">
+                        @Html.EditorFor(model => model.SHAOutPassPhrase)
+                        @Html.ValidationMessageFor(model => model.SHAOutPassPhrase)
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-3">
+                        @Html.OverrideStoreCheckboxFor(model => model.HashAllParameters_OverrideForStore, model => model.HashAllParameters, Model.ActiveStoreScopeConfiguration)
+                        @Html.NopLabelFor(model => model.HashAllParameters)
+                    </div>
+                    <div class="col-md-9">
+                        @Html.EditorFor(model => model.HashAllParameters)
+                        @Html.ValidationMessageFor(model => model.HashAllParameters)
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-3">
+                        @Html.OverrideStoreCheckboxFor(model => model.HashingAlgorithmId_OverrideForStore, model => model.HashingAlgorithmId, Model.ActiveStoreScopeConfiguration)
+                        @Html.NopLabelFor(model => model.HashingAlgorithmValues)
+                    </div>
+                    <div class="col-md-9">
+                        @Html.DropDownList("HashingAlgorithmId", Model.HashingAlgorithmValues)
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-3">
+                        @Html.OverrideStoreCheckboxFor(model => model.OgoneGatewayUrl_OverrideForStore, model => model.OgoneGatewayUrl, Model.ActiveStoreScopeConfiguration)
+                        @Html.NopLabelFor(model => model.OgoneGatewayUrl)
+                    </div>
+                    <div class="col-md-9">
+                        @Html.EditorFor(model => model.OgoneGatewayUrl)
+                        @Html.ValidationMessageFor(model => model.OgoneGatewayUrl)
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-3">
+                        @Html.OverrideStoreCheckboxFor(model => model.ParamVar_OverrideForStore, model => model.ParamVar, Model.ActiveStoreScopeConfiguration)
+                        @Html.NopLabelFor(model => model.ParamVar)
+                    </div>
+                    <div class="col-md-9">
+                        @Html.EditorFor(model => model.ParamVar)
+                        @Html.ValidationMessageFor(model => model.ParamVar)
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-3">
+                        @Html.OverrideStoreCheckboxFor(model => model.PmList_OverrideForStore, model => model.PmList, Model.ActiveStoreScopeConfiguration)
+                        @Html.NopLabelFor(model => model.PmList)
+                    </div>
+                    <div class="col-md-9">
+                        @Html.EditorFor(model => model.PmList)
+                        @Html.ValidationMessageFor(model => model.PmList)
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-3">
+                        @Html.OverrideStoreCheckboxFor(model => model.ExclPmList_OverrideForStore, model => model.ExclPmList, Model.ActiveStoreScopeConfiguration)
+                        @Html.NopLabelFor(model => model.ExclPmList)
+                    </div>
+                    <div class="col-md-9">
+                        @Html.EditorFor(model => model.ExclPmList)
+                        @Html.ValidationMessageFor(model => model.ExclPmList)
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-3">
+                        @Html.OverrideStoreCheckboxFor(model => model.OrderIdPrefix_OverrideForStore, model => model.OrderIdPrefix, Model.ActiveStoreScopeConfiguration)
+                        @Html.NopLabelFor(model => model.OrderIdPrefix)
+                    </div>
+                    <div class="col-md-9">
+                        @Html.EditorFor(model => model.OrderIdPrefix)
+                        @Html.ValidationMessageFor(model => model.OrderIdPrefix)
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-3">
+                        @Html.OverrideStoreCheckboxFor(model => model.TemplateUrl_OverrideForStore, model => model.TemplateUrl, Model.ActiveStoreScopeConfiguration)
+                        @Html.NopLabelFor(model => model.TemplateUrl)
+                    </div>
+                    <div class="col-md-9">
+                        @Html.EditorFor(model => model.TemplateUrl)
+                        @Html.ValidationMessageFor(model => model.TemplateUrl)
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-3">
+                        @Html.OverrideStoreCheckboxFor(model => model.TemplateTitle_OverrideForStore, model => model.TemplateTitle, Model.ActiveStoreScopeConfiguration)
+                        @Html.NopLabelFor(model => model.TemplateTitle)
+                    </div>
+                    <div class="col-md-9">
+                        @Html.EditorFor(model => model.TemplateTitle)
+                        @Html.ValidationMessageFor(model => model.TemplateTitle)
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-3">
+                        @Html.OverrideStoreCheckboxFor(model => model.BackgroundColor_OverrideForStore, model => model.BackgroundColor, Model.ActiveStoreScopeConfiguration)
+                        @Html.NopLabelFor(model => model.BackgroundColor)
+                    </div>
+                    <div class="col-md-9">
+                        @Html.EditorFor(model => model.BackgroundColor)
+                        @Html.ValidationMessageFor(model => model.BackgroundColor)
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-3">
+                        @Html.OverrideStoreCheckboxFor(model => model.TextColor_OverrideForStore, model => model.TextColor, Model.ActiveStoreScopeConfiguration)
+                        @Html.NopLabelFor(model => model.TextColor)
+                    </div>
+                    <div class="col-md-9">
+                        @Html.EditorFor(model => model.TextColor)
+                        @Html.ValidationMessageFor(model => model.TextColor)
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-3">
+                        @Html.OverrideStoreCheckboxFor(model => model.TableBackgroundColor_OverrideForStore, model => model.TableBackgroundColor, Model.ActiveStoreScopeConfiguration)
+                        @Html.NopLabelFor(model => model.TableBackgroundColor)
+                    </div>
+                    <div class="col-md-9">
+                        @Html.EditorFor(model => model.TableBackgroundColor)
+                        @Html.ValidationMessageFor(model => model.TableBackgroundColor)
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-3">
+                        @Html.OverrideStoreCheckboxFor(model => model.TableTextColor_OverrideForStore, model => model.TableTextColor, Model.ActiveStoreScopeConfiguration)
+                        @Html.NopLabelFor(model => model.TableTextColor)
+                    </div>
+                    <div class="col-md-9">
+                        @Html.EditorFor(model => model.TableTextColor)
+                        @Html.ValidationMessageFor(model => model.TableTextColor)
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-3">
+                        @Html.OverrideStoreCheckboxFor(model => model.ButtonBackgroundColor_OverrideForStore, model => model.ButtonBackgroundColor, Model.ActiveStoreScopeConfiguration)
+                        @Html.NopLabelFor(model => model.ButtonBackgroundColor)
+                    </div>
+                    <div class="col-md-9">
+                        @Html.EditorFor(model => model.ButtonBackgroundColor)
+                        @Html.ValidationMessageFor(model => model.ButtonBackgroundColor)
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-3">
+                        @Html.OverrideStoreCheckboxFor(model => model.ButtonTextColor_OverrideForStore, model => model.ButtonTextColor, Model.ActiveStoreScopeConfiguration)
+                        @Html.NopLabelFor(model => model.ButtonTextColor)
+                    </div>
+                    <div class="col-md-9">
+                        @Html.EditorFor(model => model.ButtonTextColor)
+                        @Html.ValidationMessageFor(model => model.ButtonTextColor)
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-3">
+                        @Html.OverrideStoreCheckboxFor(model => model.FontFamily_OverrideForStore, model => model.FontFamily, Model.ActiveStoreScopeConfiguration)
+                        @Html.NopLabelFor(model => model.FontFamily)
+                    </div>
+                    <div class="col-md-9">
+                        @Html.EditorFor(model => model.FontFamily)
+                        @Html.ValidationMessageFor(model => model.FontFamily)
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-3">
+                        @Html.OverrideStoreCheckboxFor(model => model.LogoUrl_OverrideForStore, model => model.LogoUrl, Model.ActiveStoreScopeConfiguration)
+                        @Html.NopLabelFor(model => model.LogoUrl)
+                    </div>
+                    <div class="col-md-9">
+                        @Html.EditorFor(model => model.LogoUrl)
+                        @Html.ValidationMessageFor(model => model.LogoUrl)
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-3">
+                        @Html.OverrideStoreCheckboxFor(model => model.AdditionalFee_OverrideForStore, model => model.AdditionalFee, Model.ActiveStoreScopeConfiguration)
+                        @Html.NopLabelFor(model => model.AdditionalFee)
+                    </div>
+                    <div class="col-md-9">
+                        @Html.EditorFor(model => model.AdditionalFee)
+                        @Html.ValidationMessageFor(model => model.AdditionalFee)
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-3">
+                        &nbsp;
+                    </div>
+                    <div class="col-md-9">
+                        <input type="submit" name="save" class="btn bg-blue" value="@T("Admin.Common.Save")" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
